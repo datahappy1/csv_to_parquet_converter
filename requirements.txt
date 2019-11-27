@@ -1,3 +1,6 @@
+numpy
 pandas==0.25.3
 modin==0.6.3
+modin[dask]
 fastparquet==0.3.2
+boto3
