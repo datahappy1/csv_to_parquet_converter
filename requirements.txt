@@ -1,4 +1,3 @@
-numpy
 pandas==0.25.3
 modin==0.6.3
 modin[dask]
