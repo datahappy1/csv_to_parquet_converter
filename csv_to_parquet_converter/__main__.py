@@ -21,18 +21,34 @@ def converter(source_file_path, target_file_path, columns_subset=None, compressi
         aws.download_from_s3(s3obj, source_file_path, '/temp/xxx.csv')
         source_file_path = '/temp/xxx.csv'
 
-    try:
-        df = pd.read_csv(source_file_path,
-                         usecols=columns_subset)
-    except Exception as e:
-        print(str(e))
+    if str(source_file_path).endswith(".csv"):
+        try:
+            df = pd.read_csv(source_file_path,
+                             usecols=columns_subset)
+        except Exception as e:
+            print(str(e))
 
-    try:
-        df.to_parquet(target_file_path,
-                      compression=compression or 'UNCOMPRESSED',
-                      engine='fastparquet')
-    except Exception as e:
-        print(str(e))
+        # also implement the other way around with parquet to csv using pandas.read_parquet
+        try:
+            df.to_parquet(target_file_path,
+                          compression=compression or 'UNCOMPRESSED',
+                          engine='fastparquet')
+        except Exception as e:
+            print(str(e))
+
+    if str(source_file_path).endswith(".parquet"):
+        try:
+            df = pd.read_parquet(source_file_path,
+                                 engine='fastparquet',
+                                 columns=columns_subset)
+        except Exception as e:
+            print(str(e))
+
+        # also implement the other way around with parquet to csv using pandas.read_parquet
+        try:
+            df.to_csv(target_file_path)
+        except Exception as e:
+            print(str(e))
 
     if str(target_file_path).startswith("s3://"):
         s3obj = aws.init_s3()
