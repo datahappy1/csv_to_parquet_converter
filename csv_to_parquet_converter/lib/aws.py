@@ -16,10 +16,10 @@ def init_s3():
     Initiate AWS S3 bucket
     :return: conn_s3 on success, sys.exit on error
     """
-    try:
-        aws_access_key_id = os.environ.get("aws_access_key_id")
-        aws_secret_access_key = os.environ.get("aws_secret_access_key")
+    aws_access_key_id = os.environ.get("aws_access_key_id")
+    aws_secret_access_key = os.environ.get("aws_secret_access_key")
 
+    try:
         conn_s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id,
                                aws_secret_access_key=aws_secret_access_key)
 
@@ -28,21 +28,6 @@ def init_s3():
     except ClientError:
         logging.error('AWS S3 set boto3.client failed, ClientError')
         sys.exit(1)
-
-
-def check_bucket(conn_s3):
-    """
-    Check if the s3 bucket set in settings.py exists and is available
-    :param conn_s3
-    :return: 0 if the bucket exists and we can access it
-    """
-    # try:
-    #     bucket_name = S3_BUCKET_NAME
-    #     conn_s3.head_bucket(Bucket=bucket_name)
-    #     return 0
-    # except ClientError:
-    #     logging.error('AWS S3 bucket used in settings.py not exists or not available')
-    #     sys.exit(1)
 
 
 def download_from_s3(conn_s3, remote_file_name, local_file_name):

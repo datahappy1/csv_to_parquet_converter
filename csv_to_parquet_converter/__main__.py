@@ -1,4 +1,5 @@
 import argparse
+import logging
 import pandas as pd
 # import modin.pandas as pd
 from csv_to_parquet_converter.lib import aws
