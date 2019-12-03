@@ -1,9 +1,13 @@
 import argparse
 import logging
+import traceback
 import pandas as pd
 # import modin.pandas as pd
 
+logging_level = 'INFO'
+logging.basicConfig(level=logging_level)
 logger = logging.getLogger(__name__)
+
 
 def converter_csv_to_parquet(source_file_path, target_file_path, columns_subset=None, compression=None):
     """
@@ -14,20 +18,24 @@ def converter_csv_to_parquet(source_file_path, target_file_path, columns_subset=
     :param compression:
     :return:
     """
+    df = None
+
     try:
         df = pd.read_csv(source_file_path,
                          usecols=columns_subset)
-    except Exception as error:
-        logger.error(error)
-        raise
+        logger.info("read_csv passed")
+    except Exception:
+        tb = traceback.format_exc()
+        logger.error(tb)
 
     try:
         df.to_parquet(target_file_path,
                       compression=compression or 'UNCOMPRESSED',
                       engine='fastparquet')
-    except Exception as error:
-        logger.error(error)
-        raise
+        logger.info("to_parquet passed")
+    except Exception:
+        tb = traceback.format_exc()
+        logger.error(tb)
 
     return 0
 
@@ -41,19 +49,23 @@ def converter_parquet_to_csv(source_file_path, target_file_path, columns_subset=
     :param compression:
     :return:
     """
+    df = None
+
     try:
         df = pd.read_parquet(source_file_path,
                              engine='fastparquet',
                              columns=columns_subset)
-    except Exception as error:
-        logger.error(error)
-        raise
+        logger.info("read_parquet passed")
+    except Exception:
+        tb = traceback.format_exc()
+        logger.error(tb)
 
     try:
         df.to_csv(target_file_path)
-    except Exception as error:
-        logger.error(error)
-        raise
+        logger.info("to_csv passed")
+    except Exception:
+        tb = traceback.format_exc()
+        logger.error(tb)
 
     return 0
 
