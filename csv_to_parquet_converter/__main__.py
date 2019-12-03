@@ -2,16 +2,8 @@ import argparse
 import logging
 import pandas as pd
 # import modin.pandas as pd
-from csv_to_parquet_converter.lib import aws
 
-
-def cleanup_temp_folders():
-    """
-    cleanup temp folders function
-    :return:
-    """
-    # cleanup content of /temp/source, /temp/target
-
+logger = logging.getLogger(__name__)
 
 def converter_csv_to_parquet(source_file_path, target_file_path, columns_subset=None, compression=None):
     """
@@ -22,34 +14,20 @@ def converter_csv_to_parquet(source_file_path, target_file_path, columns_subset=
     :param compression:
     :return:
     """
-    df = None
-    temp_source_file_path = '/temp/source/xxx.csv'
-    temp_target_file_path = '/temp/target/xxx.parquet'
-
-    if str(source_file_path).startswith("s3://"):
-        s3obj = aws.init_s3()
-        aws.download_from_s3(s3obj, source_file_path, temp_source_file_path)
-    else:
-        temp_source_file_path = source_file_path
-
     try:
-        df = pd.read_csv(temp_source_file_path,
+        df = pd.read_csv(source_file_path,
                          usecols=columns_subset)
-    except Exception as e:
-        print(str(e))
+    except Exception as error:
+        logger.error(error)
+        raise
 
     try:
-        df.to_parquet(temp_target_file_path,
+        df.to_parquet(target_file_path,
                       compression=compression or 'UNCOMPRESSED',
                       engine='fastparquet')
-    except Exception as e:
-        print(str(e))
-
-    if str(target_file_path).startswith("s3://"):
-        s3obj = aws.init_s3()
-        aws.upload_to_s3(s3obj, target_file_path, temp_target_file_path)
-    else:
-    # copy target file from temp_target_file_path to target_file_path
+    except Exception as error:
+        logger.error(error)
+        raise
 
     return 0
 
@@ -63,46 +41,33 @@ def converter_parquet_to_csv(source_file_path, target_file_path, columns_subset=
     :param compression:
     :return:
     """
-    df = None
-    temp_source_file_path = '/temp/source/xxx.csv'
-    temp_target_file_path = '/temp/target/xxx.parquet'
-
-    if str(source_file_path).startswith("s3://"):
-        s3obj = aws.init_s3()
-        aws.download_from_s3(s3obj, source_file_path, temp_source_file_path)
-    else:
-        temp_source_file_path = source_file_path
     try:
-        df = pd.read_parquet(temp_source_file_path,
+        df = pd.read_parquet(source_file_path,
                              engine='fastparquet',
                              columns=columns_subset)
-    except Exception as e:
-        print(str(e))
+    except Exception as error:
+        logger.error(error)
+        raise
 
     try:
-        df.to_csv(temp_target_file_path)
-    except Exception as e:
-        print(str(e))
-
-    if str(target_file_path).startswith("s3://"):
-        s3obj = aws.init_s3()
-        aws.upload_to_s3(s3obj, target_file_path, temp_target_file_path)
-    else:
-    # copy target file from temp_target_file_path to target_file_path
+        df.to_csv(target_file_path)
+    except Exception as error:
+        logger.error(error)
+        raise
 
     return 0
 
 
 def main(conversion_type, source_file_path, target_file_path, columns_subset, compression):
     if conversion_type == 'csv_to_parquet':
-        res = converter_csv_to_parquet(source_file_path, target_file_path, columns_subset, compression)
+        conversion_result = converter_csv_to_parquet(source_file_path, target_file_path, columns_subset, compression)
     elif conversion_type == 'parquet_to_csv':
-        res = converter_parquet_to_csv(source_file_path, target_file_path, columns_subset, compression)
+        conversion_result = converter_parquet_to_csv(source_file_path, target_file_path, columns_subset, compression)
     else:
         raise NotImplementedError
 
-    if res == 0:
-        cleanup_temp_folders()
+    if conversion_result == 0:
+        return 0
 
 
 def prepare_args():
