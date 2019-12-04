@@ -34,7 +34,7 @@ def converter_csv_to_parquet(source_file_path, target_file_path,
         return 1
 
     try:
-        data_frame.to_parquet('x'+target_file_path,
+        data_frame.to_parquet(target_file_path,
                               compression=compression or 'UNCOMPRESSED',
                               engine='fastparquet')
         LOGGER.info("to_parquet passed")
@@ -132,9 +132,9 @@ def prepare_args():
                        )
 
     if main_result == 0:
-        LOGGER.info('Conversion end to end passed')
+        LOGGER.info(f'Conversion {conversion_type} end to end passed')
     else:
-        LOGGER.info('Conversion end to end failed')
+        LOGGER.info(f'Conversion {conversion_type} end to end failed')
 
 
 if __name__ == '__main__':
