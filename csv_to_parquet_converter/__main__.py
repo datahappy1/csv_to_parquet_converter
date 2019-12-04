@@ -76,27 +76,23 @@ def converter_parquet_to_csv(source_file_path, target_file_path,
     return 0
 
 
-def main(kwargs):
+def main(prepared_args):
     """
     main conversion runner
-    :param conversion_type:
-    :param source_file_path:
-    :param target_file_path:
-    :param columns_subset:
-    :param compression:
+    :param prepared_args:
     :return:
     """
     conversion_result = None
 
-    if kwargs['conversion_type'] == 'csv_to_parquet':
-        conversion_result = converter_csv_to_parquet(kwargs['source_file_path'],
-                                                     kwargs['target_file_path'],
-                                                     kwargs['columns_subset'],
-                                                     kwargs['compression'])
-    elif kwargs['conversion_type'] == 'parquet_to_csv':
-        conversion_result = converter_parquet_to_csv(kwargs['source_file_path'],
-                                                     kwargs['target_file_path'],
-                                                     kwargs['columns_subset'])
+    if prepared_args['conversion_type'] == 'csv_to_parquet':
+        conversion_result = converter_csv_to_parquet(prepared_args['source_file_path'],
+                                                     prepared_args['target_file_path'],
+                                                     prepared_args['columns_subset'],
+                                                     prepared_args['compression'])
+    elif prepared_args['conversion_type'] == 'parquet_to_csv':
+        conversion_result = converter_parquet_to_csv(prepared_args['source_file_path'],
+                                                     prepared_args['target_file_path'],
+                                                     prepared_args['columns_subset'])
 
     return conversion_result
 
@@ -135,8 +131,8 @@ def prepare_args():
 
 
 if __name__ == '__main__':
-    kwargs = prepare_args()
-    main_result = main(kwargs)
+    prepared_args = prepare_args()
+    main_result = main(prepared_args)
 
     if main_result == 0:
         LOGGER.info(f'Conversion end to end passed')
