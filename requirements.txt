@@ -1,3 +1,4 @@
 pandas==0.25.3
 fastparquet==0.3.2
 s3fs==0.4.0
+pytest

@@ -1,8 +1,8 @@
 <h1 class="code-line" data-line-start=0 data-line-end=1 ><a id="csv_to_parquet_and_parquet_to_csv_converter_0"></a>csv to parquet and parquet to csv converter</h1>
 <h2 class="code-line" data-line-start=1 data-line-end=2 ><a id="10000ft_Overview_1"></a>10000ft. Overview</h2>
 This tool is able to convert .csv files to .parquet files used for columnar storage typically in the Hadoop ecosystem. It is also able to
-convert .parquet files to .csv files. This is achieved thanks to the 4 built-in Pandas dataframe methods `read_csv`, `read_parquet`, 'to_csv', 'to_parquet'.
-Because Pandas uses s3fs for AWS S3 integration, you are free to choose whether the location of the source and/or converted target files is on your local machine or in AWS S3.
+convert .parquet files to .csv files. This is achieved thanks to the 4 built-in Pandas dataframe methods <code>read_csv</code>, <code>read_parquet</code>, <code>to_csv</code> and <code>to_parquet</code>.
+Because Pandas uses <code>s3fs</code> for AWS S3 integration, so you are free to choose whether the location of the source and/or converted target files is on your local machine or in AWS S3.
 <h2 class="code-line" data-line-start=3 data-line-end=4 ><a id="How_to_install_and_run_3"></a>How to install and run</h2>
 <ol>
 <li class="has-line-data" data-line-start="4" data-line-end="5">
