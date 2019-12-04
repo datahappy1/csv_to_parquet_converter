@@ -9,7 +9,7 @@ Because Pandas uses <code>s3fs</code> for AWS S3 integration, so you are free to
 <p class="has-line-data" data-line-start="10" data-line-end="11">setup a virtual environment</p>
 </li>
 <li class="has-line-data" data-line-start="5" data-line-end="10">
-<p class="has-line-data" data-line-start="5" data-line-end="10">in case you wish to use AWS S3 as a source file or a target file location for the conversion,<br>
+<p class="has-line-data" data-line-start="5" data-line-end="10">in case you wish to use AWS S3 as a source file and/or a target file location for the conversion,<br>
 set environment variables like:<br>
 <code>aws_access_key_id = &lt;your AWS IAM access key id&gt;</code><br>
 <code>aws_secret_access_key = &lt;your AWS IAM secret access key value&gt;</code><br>
