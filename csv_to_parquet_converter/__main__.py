@@ -4,8 +4,10 @@ import traceback
 import pandas as pd
 # import modin.pandas as pd
 
-logging_level = 'INFO'
-logging.basicConfig(level=logging_level)
+logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
 logger = logging.getLogger(__name__)
 
 
@@ -40,7 +42,7 @@ def converter_csv_to_parquet(source_file_path, target_file_path, columns_subset=
     return 0
 
 
-def converter_parquet_to_csv(source_file_path, target_file_path, columns_subset=None, compression=None):
+def converter_parquet_to_csv(source_file_path, target_file_path, columns_subset=None):
     """
     function to convert source parquet file to target csv file
     :param source_file_path:
@@ -61,7 +63,7 @@ def converter_parquet_to_csv(source_file_path, target_file_path, columns_subset=
         logger.error(tb)
 
     try:
-        df.to_csv(target_file_path)
+        df.to_csv(target_file_path, index=False)
         logger.info("to_csv passed")
     except Exception:
         tb = traceback.format_exc()
@@ -74,7 +76,7 @@ def main(conversion_type, source_file_path, target_file_path, columns_subset, co
     if conversion_type == 'csv_to_parquet':
         conversion_result = converter_csv_to_parquet(source_file_path, target_file_path, columns_subset, compression)
     elif conversion_type == 'parquet_to_csv':
-        conversion_result = converter_parquet_to_csv(source_file_path, target_file_path, columns_subset, compression)
+        conversion_result = converter_parquet_to_csv(source_file_path, target_file_path, columns_subset)
     else:
         raise NotImplementedError
 
@@ -106,13 +108,14 @@ def prepare_args():
     else:
         raise NotImplementedError
 
-    main(conversion_type=conversion_type,
-         source_file_path=source_file_path,
-         target_file_path=target_file_path,
-         columns_subset=columns_subset,
-         compression=compression
-         )
-
+    main_result = main(conversion_type=conversion_type,
+                       source_file_path=source_file_path,
+                       target_file_path=target_file_path,
+                       columns_subset=columns_subset,
+                       compression=compression
+                       )
+    if main_result == 0:
+        logger.info('Conversion end to end passed')
 
 if __name__ == '__main__':
     prepare_args()
