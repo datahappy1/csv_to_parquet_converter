@@ -1,7 +1,6 @@
 """
 __main__ module
 """
-
 import argparse
 import logging
 import traceback
@@ -77,8 +76,7 @@ def converter_parquet_to_csv(source_file_path, target_file_path,
     return 0
 
 
-def main(conversion_type, source_file_path, target_file_path,
-         columns_subset, compression):
+def main(kwargs):
     """
     main conversion runner
     :param conversion_type:
@@ -88,14 +86,17 @@ def main(conversion_type, source_file_path, target_file_path,
     :param compression:
     :return:
     """
-    if conversion_type == 'csv_to_parquet':
-        conversion_result = converter_csv_to_parquet(source_file_path, target_file_path,
-                                                     columns_subset, compression)
-    elif conversion_type == 'parquet_to_csv':
-        conversion_result = converter_parquet_to_csv(source_file_path, target_file_path,
-                                                     columns_subset)
-    else:
-        raise NotImplementedError
+    conversion_result = None
+
+    if kwargs['conversion_type'] == 'csv_to_parquet':
+        conversion_result = converter_csv_to_parquet(kwargs['source_file_path'],
+                                                     kwargs['target_file_path'],
+                                                     kwargs['columns_subset'],
+                                                     kwargs['compression'])
+    elif kwargs['conversion_type'] == 'parquet_to_csv':
+        conversion_result = converter_parquet_to_csv(kwargs['source_file_path'],
+                                                     kwargs['target_file_path'],
+                                                     kwargs['columns_subset'])
 
     return conversion_result
 
@@ -122,20 +123,22 @@ def prepare_args():
     elif str(source_file_path).endswith(".parquet") and str(target_file_path).endswith(".csv"):
         conversion_type = 'parquet_to_csv'
     else:
+        LOGGER.error('Not implemented conversion type, valid options: '
+                     '.csv to .parquet or .parquet to .csv')
         raise NotImplementedError
 
-    main_result = main(conversion_type=conversion_type,
-                       source_file_path=source_file_path,
-                       target_file_path=target_file_path,
-                       columns_subset=columns_subset,
-                       compression=compression
-                       )
-
-    if main_result == 0:
-        LOGGER.info(f'Conversion {conversion_type} end to end passed')
-    else:
-        LOGGER.info(f'Conversion {conversion_type} end to end failed')
+    return {'conversion_type': conversion_type,
+            'source_file_path': source_file_path,
+            'target_file_path': target_file_path,
+            'columns_subset': columns_subset,
+            'compression': compression}
 
 
 if __name__ == '__main__':
-    prepare_args()
+    kwargs = prepare_args()
+    main_result = main(kwargs)
+
+    if main_result == 0:
+        LOGGER.info(f'Conversion end to end passed')
+    else:
+        LOGGER.info(f'Conversion end to end failed')
