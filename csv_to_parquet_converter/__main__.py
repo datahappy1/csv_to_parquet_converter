@@ -24,8 +24,6 @@ def converter_csv_to_parquet(source_file_path, target_file_path,
     :param compression:
     :return:
     """
-    data_frame = None
-
     try:
         data_frame = pd.read_csv(source_file_path,
                                  usecols=columns_subset)
@@ -33,15 +31,17 @@ def converter_csv_to_parquet(source_file_path, target_file_path,
     except Exception:
         trace_back = traceback.format_exc()
         LOGGER.error(trace_back)
+        return 1
 
     try:
-        data_frame.to_parquet(target_file_path,
+        data_frame.to_parquet('x'+target_file_path,
                               compression=compression or 'UNCOMPRESSED',
                               engine='fastparquet')
         LOGGER.info("to_parquet passed")
     except Exception:
         trace_back = traceback.format_exc()
         LOGGER.error(trace_back)
+        return 1
 
     return 0
 
@@ -56,8 +56,6 @@ def converter_parquet_to_csv(source_file_path, target_file_path,
     :param compression:
     :return:
     """
-    data_frame = None
-
     try:
         data_frame = pd.read_parquet(source_file_path,
                                      engine='fastparquet',
@@ -66,6 +64,7 @@ def converter_parquet_to_csv(source_file_path, target_file_path,
     except Exception:
         trace_back = traceback.format_exc()
         LOGGER.error(trace_back)
+        return 1
 
     try:
         data_frame.to_csv(target_file_path, index=False)
@@ -73,6 +72,7 @@ def converter_parquet_to_csv(source_file_path, target_file_path,
     except Exception:
         trace_back = traceback.format_exc()
         LOGGER.error(trace_back)
+        return 1
 
     return 0
 
@@ -97,9 +97,7 @@ def main(conversion_type, source_file_path, target_file_path,
     else:
         raise NotImplementedError
 
-    if conversion_result == 0:
-        return 0
-    return 1
+    return conversion_result
 
 
 def prepare_args():
@@ -132,9 +130,10 @@ def prepare_args():
                        columns_subset=columns_subset,
                        compression=compression
                        )
+
     if main_result == 0:
         LOGGER.info('Conversion end to end passed')
-    elif main_result == 1:
+    else:
         LOGGER.info('Conversion end to end failed')
 
 
