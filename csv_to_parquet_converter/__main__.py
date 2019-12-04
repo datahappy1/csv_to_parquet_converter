@@ -98,7 +98,7 @@ def prepare_args():
 
     source_file_path = parsed.sourcefilepath
     target_file_path = parsed.targetfilepath
-    columns_subset = parsed.columnssubset  # ["col1", "col3"]
+    columns_subset = parsed.columnssubset
     compression = parsed.compression
 
     if str(source_file_path).endswith(".csv") and str(target_file_path).endswith(".parquet"):
