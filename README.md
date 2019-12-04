@@ -5,8 +5,8 @@ convert .parquet files to .csv files. This is achieved thanks to the 4 built-in 
 Because Pandas uses <code>s3fs</code> for AWS S3 integration, so you are free to choose whether the location of the source and/or converted target files is on your local machine or in AWS S3.
 <h2 class="code-line" data-line-start=3 data-line-end=4 ><a id="How_to_install_and_run_3"></a>How to install and run</h2>
 <ol>
-<li class="has-line-data" data-line-start="4" data-line-end="5">
-<p class="has-line-data" data-line-start="4" data-line-end="5">pip3 install -r requirements.txt</p>
+<li class="has-line-data" data-line-start="10" data-line-end="11">
+<p class="has-line-data" data-line-start="10" data-line-end="11">setup a virtual environment</p>
 </li>
 <li class="has-line-data" data-line-start="5" data-line-end="10">
 <p class="has-line-data" data-line-start="5" data-line-end="10">in case you wish to use AWS S3 as a source file or a target file location for the conversion,<br>
@@ -15,8 +15,8 @@ set environment variables like:<br>
 <code>aws_secret_access_key = &lt;your AWS IAM secret access key value&gt;</code><br>
 Pandas uses s3fs to integrate with AWS S3, please see <a href="https://s3fs.readthedocs.io/en/latest/">https://s3fs.readthedocs.io/en/latest/</a> in case of any authentication issues.</p>
 </li>
-<li class="has-line-data" data-line-start="10" data-line-end="11">
-<p class="has-line-data" data-line-start="10" data-line-end="11">setup a virtual environment</p>
+<li class="has-line-data" data-line-start="4" data-line-end="5">
+<p class="has-line-data" data-line-start="4" data-line-end="5">pip3 install -r requirements.txt</p>
 </li>
 <li class="has-line-data" data-line-start="11" data-line-end="48">
 <p class="has-line-data" data-line-start="11" data-line-end="12">run <code>python __main__.py</code> with the requiered arguments <code>-sfp</code> for source file path, <code>-tfp</code> for target file path, set like:</p>
