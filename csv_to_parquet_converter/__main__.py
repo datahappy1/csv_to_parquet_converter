@@ -76,10 +76,10 @@ def converter_parquet_to_csv(source_file_path, target_file_path,
     return 0
 
 
-def main(prepared_args):
+def main(**prepared_args):
     """
     main conversion runner
-    :param prepared_args:
+    :param prepared_args kwargs:
     :return:
     """
     conversion_result = None
@@ -132,7 +132,7 @@ def prepare_args():
 
 if __name__ == '__main__':
     prepared_args = prepare_args()
-    main_result = main(prepared_args)
+    main_result = main(**prepared_args)
 
     if main_result == 0:
         LOGGER.info(f'Conversion end to end passed')
