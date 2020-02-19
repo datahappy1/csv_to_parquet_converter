@@ -1,5 +1,5 @@
 from csv_to_parquet_converter.__main__ import converter_csv_to_parquet, converter_parquet_to_csv
-
+# set the working directory for instance like C:\csv_to_parquet_converter\tests
 
 def test_functional_csv_to_parquet():
     """
