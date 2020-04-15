@@ -57,9 +57,10 @@ Pandas uses s3fs to integrate with AWS S3, please see <a href="https://s3fs.read
 <pre><code>http://parquet-viewer-online.com/
 </code></pre>
 <h2 class="code-line" data-line-start=55 data-line-end=56 ><a id="Further_documentation_55"></a>Further documentation</h2>
-<pre><code>https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html
-https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_parquet.html
-https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html
-https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_parquet.html
-https://s3fs.readthedocs.io/en/latest/
-</code></pre>
+<ul>
+  <li>https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html</li>
+  <li>https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_parquet.html</li>
+  <li>https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html</li>
+  <li>https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_parquet.html</li>
+  <li>https://s3fs.readthedocs.io/en/latest/</li>
+</ul>
