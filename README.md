@@ -54,8 +54,7 @@ Pandas uses s3fs to integrate with AWS S3, please see <a href="https://s3fs.read
 </li>
 </ol>
 <h2 class="code-line" data-line-start=52 data-line-end=53 ><a id="How_to_verify_a_parquet_file_52"></a>How to verify a parquet file:</h2>
-<pre><code>http://parquet-viewer-online.com/
-</code></pre>
+<ul><li>http://parquet-viewer-online.com/</li></ul>
 <h2 class="code-line" data-line-start=55 data-line-end=56 ><a id="Further_documentation_55"></a>Further documentation</h2>
 <ul>
   <li>https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html</li>
