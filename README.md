@@ -49,7 +49,7 @@ Pandas uses s3fs to integrate with AWS S3, please see <a href="https://s3fs.read
 </li>
 <li class="has-line-data" data-line-start="48" data-line-end="52">
 <p class="has-line-data" data-line-start="48" data-line-end="51">you can add these optional arguments:<br>
-<code>-cols</code> argument is used to define a subset of columns from the source csv file, meaning that only the columns passed as a <code>list</code> to this argument will get loaded and converted, example: <code>[&quot;column_name_1&quot;, &quot;column_name_2&quot;]</code><br>
+<code>-cols</code> argument is used to define a subset of columns from the source file, meaning that only the columns passed as a <code>list</code> to this argument will get loaded and converted, example: <code>[&quot;column_name_1&quot;, &quot;column_name_2&quot;]</code><br>
 <code>-comp</code> argument is used for overriding the default parquet compression type (<code>snappy</code>) in case of converting from a csv to parquet file, example: <code>gzip</code></p>
 </li>
 </ol>
